@@ -81,8 +81,7 @@ uploaded_file = st.file_uploader(label="Upload your Resume")
 if uploaded_file:
     file_path = f"{working_dir}/{uploaded_file.name}"
     with open(file_path, "wb") as f:
-        f.write(uploaded_file.getbuffer())    
-        
+        f.write(uploaded_file.getbuffer())       
         
     if "vectorstores" not in st.session_state:
         st.session_state.vectorstores = setup_vectorstore(load_documents(file_path)) 
