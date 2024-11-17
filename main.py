@@ -9,12 +9,13 @@ from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 import os
 import nltk
+import cv2
 
 
 load_dotenv('/.env')
 
 API_KEY = os.getenv('API_KEY')
-
+#API_KEY = st.secrets["API_KEY"]
 import nltk
 nltk.download('punkt')
 
@@ -47,6 +48,7 @@ def create_chain(vectorstores):
     api = API_KEY
     llm = ChatGroq(
         api_key = api,
+        groq_api_key = api,
         model = MODEL_ID,
         temperature=TEMPERATURE
     )
@@ -79,9 +81,12 @@ if "chat_history" not in st.session_state:
 uploaded_file = st.file_uploader(label="Upload your Resume")
 
 if uploaded_file:
+    #file_content = uploaded_file.read()  
+    # 
     file_path = f"{working_dir}/{uploaded_file.name}"
+
     with open(file_path, "wb") as f:
-        f.write(uploaded_file.getbuffer())       
+        f.write(uploaded_file.getbuffer())      
         
     if "vectorstores" not in st.session_state:
         st.session_state.vectorstores = setup_vectorstore(load_documents(file_path)) 
