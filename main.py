@@ -11,11 +11,11 @@ import os
 import nltk
 import cv2
 
+nltk.download('punkt')
 
 load_dotenv('/.env')
-
 API_KEY = os.getenv('API_KEY')
-#API_KEY = st.secrets["API_KEY"]
+
 import nltk
 nltk.download('punkt')
 
@@ -79,10 +79,7 @@ if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
     
 uploaded_file = st.file_uploader(label="Upload your Resume")
-
 if uploaded_file:
-    #file_content = uploaded_file.read()  
-    # 
     file_path = f"{working_dir}/{uploaded_file.name}"
 
     with open(file_path, "wb") as f:
